@@ -1,8 +1,6 @@
 // import Titles from "@/components/typography/title";
 import { 
-    // LayoutOutlined, 
-    SearchOutlined, 
-    // UnorderedListOutlined
+    SearchOutlined
 } from "@ant-design/icons";
 import { Button } from "antd";
 import Input from "antd/es/input/Input";
