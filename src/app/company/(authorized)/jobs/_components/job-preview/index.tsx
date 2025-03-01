@@ -1,6 +1,7 @@
 import Titles from "@/components/typography/title";
 import { Button, Divider, Tag } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface JobPreviewProps {
     editable?: boolean;
@@ -9,6 +10,7 @@ interface JobPreviewProps {
 }
 export default function JobPreview({ editable, showApplyButton, hideTitle }: JobPreviewProps) {
     console.log(editable, showApplyButton) // TODO: some button show
+    const router = useRouter()
     return (
         <>
             <section>
@@ -21,7 +23,7 @@ export default function JobPreview({ editable, showApplyButton, hideTitle }: Job
                     </div>
                     <div>
                         {editable && (
-                            <Button>Ubah Iklan</Button>
+                            <Button onClick={() => router.push('/company/jobs/create')}>Ubah Iklan</Button>
                         )}
                     </div>
 
