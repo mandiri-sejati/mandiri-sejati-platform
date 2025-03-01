@@ -1,5 +1,9 @@
 // import Titles from "@/components/typography/title";
-import { LayoutOutlined, SearchOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { 
+    // LayoutOutlined, 
+    SearchOutlined, 
+    // UnorderedListOutlined
+} from "@ant-design/icons";
 import { Button } from "antd";
 import Input from "antd/es/input/Input";
 import JobCard from "./job-card";
