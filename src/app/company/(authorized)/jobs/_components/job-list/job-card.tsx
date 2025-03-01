@@ -239,7 +239,7 @@ export default function JobCard({ type }: { type: 'published' | 'draft' }) {
                     </NextLink>
                 ),
                 key: '3',
-                className:'h-[40px]'
+                className:'h-[40px]',
             },
         ];
 
