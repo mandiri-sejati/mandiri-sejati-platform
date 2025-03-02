@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import classNames from "classnames";
 import Title from "antd/es/typography/Title";
 import TextArea from "antd/es/input/TextArea";
-import Skill from "./skill";
+// import Skill from "./skill";
 import { useRouter } from "next/navigation";
 
 function SignUpFormStep2({
@@ -215,12 +215,12 @@ function SignUpFormStep2({
                             </button>
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <Title level={4}>
                             Tunjangan dan Keuntungan (Opsional)
                         </Title>
                         <Skill />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="bg-white border-t border-[#E0E0E0] py-2.5 px-2.5">

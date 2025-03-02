@@ -1,6 +1,7 @@
 import { EyeOutlined, UserOutlined, EllipsisOutlined, DeleteOutlined, EditOutlined, PoweroffOutlined, SnippetsOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Switch, MenuProps } from "antd";
+import { Dropdown, Space, Switch, MenuProps, Modal, Button } from "antd";
 import NextLink from "next/link";
+import { useState } from "react";
 
 const draftJobListings = [
     {
@@ -192,13 +193,37 @@ const jobListings = [
   ];
   
 
-export default function JobCard({ type }: { type: 'published' | 'draft' }) {
+export default function JobCard({ type, selectedTabs }: { type: 'published' | 'draft', selectedTabs: string }) {
     let selectedJobs = []
     if (type === 'draft') {
         selectedJobs = draftJobListings
     }else{
-        selectedJobs = jobListings
+        let isActive: boolean
+        switch (selectedTabs) {
+          case "Aktif":
+            isActive = true
+            break;
+          case "Nonaktif":
+            isActive = false
+        }
+        selectedJobs = selectedTabs === "Semua" ? jobListings : jobListings.filter(job => job.isActive === isActive)
     }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="space-y-3">
       {selectedJobs.map((job) => {
@@ -225,7 +250,7 @@ export default function JobCard({ type }: { type: 'published' | 'draft' }) {
             },
             {
                 label: (
-                    <NextLink href="#">
+                    <NextLink href="#" onClick={showModal}>
                         <PoweroffOutlined /> Nonaktifkan Iklan
                     </NextLink>
                 ),
@@ -244,6 +269,7 @@ export default function JobCard({ type }: { type: 'published' | 'draft' }) {
         ];
 
         return (
+          <>
           <div key={job.id} className="rounded-md border p-3">
             <div className="grid grid-cols-12 gap-3">
               {/* Bagian Kiri */}
@@ -282,7 +308,7 @@ export default function JobCard({ type }: { type: 'published' | 'draft' }) {
               {/* Bagian Kanan */}
               <div className="col-span-2 text-sm text-[#1F1F1F] text-left flex justify-between flex-col">
                 <div>
-                  <Switch defaultChecked={job.isActive} onChange={() => { }} /> Aktif
+                  <Switch defaultChecked={job.isActive} onChange={() => showModal()} /> Aktif
                 </div>
                 <div>
                   <EyeOutlined /> Total dilihat: {job.views}
@@ -293,6 +319,25 @@ export default function JobCard({ type }: { type: 'published' | 'draft' }) {
               </div>
             </div>
           </div>
+
+          <Modal 
+            centered 
+            title="Nonaktifkan Iklan ?" 
+            open={isModalOpen} 
+            // onOk={handleOk} 
+            onCancel={handleCancel}
+            footer={[
+              <Button key="back" onClick={handleCancel}>
+                Batal
+              </Button>,
+              <Button key="submit" type="primary" onClick={() => handleOk()}>
+                Nonaktifkan
+              </Button>
+            ]}
+          >
+            <p>Pencari kerja tidak dapat melamar pekerjaan ini lagi. Apakah Anda yakin ingin menonaktifkan ?</p>
+          </Modal>
+          </>
         );
       })}
     </div>

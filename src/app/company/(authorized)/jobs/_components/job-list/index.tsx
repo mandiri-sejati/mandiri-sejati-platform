@@ -5,8 +5,10 @@ import {
 import { Button } from "antd";
 import Input from "antd/es/input/Input";
 import JobCard from "./job-card";
+import { useState } from "react";
 
 export default function JobList({ type }: { type: 'published' | 'draft' }) {
+    const [selectedTabs, setSelectedTabs] = useState("Semua")
     return (
         <div>
             <section>
@@ -15,9 +17,9 @@ export default function JobList({ type }: { type: 'published' | 'draft' }) {
                         <Input placeholder="Cari Iklan" prefix={<SearchOutlined />} />
                         {type === 'published' && (
                             <>
-                                <Button className="!h-full" color="primary" variant="outlined">Semua</Button>
-                                <Button className="!h-full">Iklan Aktif</Button>
-                                <Button className="!h-full">Iklan Non-aktif</Button>
+                                <Button className="!h-full" color="primary" variant="outlined" onClick={() => setSelectedTabs("Semua")}>Semua</Button>
+                                <Button className="!h-full" onClick={() => setSelectedTabs("Aktif")}>Iklan Aktif</Button>
+                                <Button className="!h-full" onClick={() => setSelectedTabs("Nonaktif")}>Iklan Non-aktif</Button>
                             </>
                         )}
 
@@ -33,7 +35,7 @@ export default function JobList({ type }: { type: 'published' | 'draft' }) {
                 </div>
             </section>
             <section className="mt-5">
-                <JobCard type={type} />
+                <JobCard type={type} selectedTabs={selectedTabs}/>
             </section>
         </div>
     )
