@@ -201,7 +201,7 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
 
   return (
     <div className="space-y-3">
-      {selectedJobs.map((job) => {
+      {selectedJobs.map((job, idx) => {
         // Dropdown items untuk tiap job
         const dropdownItems: MenuProps['items'] = [
             {
@@ -245,7 +245,7 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
 
         return (
           <>
-          <div key={job.id} className="rounded-md border p-3">
+          <div key={idx} className="rounded-md border p-3">
             <div className="grid grid-cols-12 gap-3">
               {/* Bagian Kiri */}
               <div className="col-span-4 flex gap-3 items-start">
