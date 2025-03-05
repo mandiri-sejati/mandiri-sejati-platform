@@ -8,8 +8,8 @@ interface JobPreviewProps {
     showApplyButton?: boolean;
     hideTitle?: boolean
 }
-export default function JobPreview({ editable, showApplyButton, hideTitle }: JobPreviewProps) {
-    console.log(editable, showApplyButton) // TODO: some button show
+export default function JobPreview({ editable, hideTitle }: JobPreviewProps) {
+    // console.log(editable, showApplyButton) // TODO: some button show
     return (
         <>
             <section>
