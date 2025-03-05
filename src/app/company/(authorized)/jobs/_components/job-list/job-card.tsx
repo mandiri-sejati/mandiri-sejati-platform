@@ -202,7 +202,7 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
 
   return (
     <div className="space-y-3">
-      {selectedJobs.map((job, idx) => {
+      {selectedJobs.map((job) => {
         // Dropdown items untuk tiap job
         const dropdownItems: MenuProps['items'] = [
             {
