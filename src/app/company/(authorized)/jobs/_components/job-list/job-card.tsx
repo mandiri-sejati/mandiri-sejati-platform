@@ -159,6 +159,7 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
         }
         selectedJobs = selectedTabs === "Semua" ? jobListings : jobListings.filter(job => job.isActive === isActive)
     }
+    console.log("di klik", selectedJobs)
 
     if (search) {
       selectedJobs = selectedJobs.filter((el) => el.title.toLowerCase().includes(search))
@@ -245,7 +246,7 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
 
         return (
           <>
-          <div key={idx} className="rounded-md border p-3">
+          <div key={job.id} className="rounded-md border p-3">
             <div className="grid grid-cols-12 gap-3">
               {/* Bagian Kiri */}
               <div className="col-span-4 flex gap-3 items-start">
