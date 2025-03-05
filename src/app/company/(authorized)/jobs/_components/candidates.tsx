@@ -1,6 +1,6 @@
 'use client'
 // import Titles from "@/components/typography/title";
-import { ArrowDownOutlined, EditOutlined, LayoutOutlined, SearchOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
 import { Avatar, Modal, Tag, Dropdown, Space } from "antd";
 import Input from "antd/es/input/Input";
 import Link from "antd/es/typography/Link";

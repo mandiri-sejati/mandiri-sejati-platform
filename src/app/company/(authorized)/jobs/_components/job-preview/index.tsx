@@ -1,7 +1,6 @@
 import Titles from "@/components/typography/title";
 import { Button, Divider, Tag, Card } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface JobPreviewProps {
@@ -11,7 +10,6 @@ interface JobPreviewProps {
 }
 export default function JobPreview({ editable, showApplyButton, hideTitle }: JobPreviewProps) {
     console.log(editable, showApplyButton) // TODO: some button show
-    const router = useRouter()
     return (
         <>
             <section>
