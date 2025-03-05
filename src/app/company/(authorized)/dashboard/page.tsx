@@ -47,7 +47,7 @@ export default function Page() {
                     <div className="col-span-4 gap-3 flex flex-col">
                         <div className="border rounded-md flex-1 flex flex-col justify-center items-center p-3">
                             <h3 className="text-base text-[#737373] font-normal">Kotak Masuk</h3>
-                            <h3 className="text-5xl">10</h3>
+                            <h3 className="text-5xl">212</h3>
                         </div>
                         <div className="border rounded-md flex-1 flex flex-col justify-center items-center p-3">
                             <h3 className="text-base text-[#737373] font-normal">Ditolak</h3>

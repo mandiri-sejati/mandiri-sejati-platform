@@ -1,12 +1,12 @@
 'use client'
 // import Titles from "@/components/typography/title";
-import { ArrowDownOutlined, EditOutlined, LayoutOutlined, SearchOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Avatar, Modal, Tag, Dropdown, Space } from "antd";
-import Input from "antd/es/input/Input";
+import { ArrowDownOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import Link from "antd/es/typography/Link";
 import NextLink from "next/link";
-import { useState } from "react";
-import CandidatePreview from "./candidate-preview";
+import Input from "antd/es/input/Input";
+import CandidatePreview from "../../jobs/_components/candidate-preview";
 
 
 const candidates = [
@@ -33,7 +33,7 @@ const candidates = [
     id: 3,
     name: "Noris Wahyu Rahmanda",
     location: "Jakarta Pusat, DKI Jakarta",
-    status: "Terpilih",
+    status: "Interview",
     appliedDate: "Jul 25, 2024",
     appliedHour: "19:06",
     matchingSkill: "6 dari 7",
@@ -42,7 +42,7 @@ const candidates = [
     id: 4,
     name: "Noris Wahyu Rahmanda",
     location: "Jakarta Pusat, DKI Jakarta",
-    status: "Interview",
+    status: "Offering",
     appliedDate: "Jul 25, 2024",
     appliedHour: "19:06",
     matchingSkill: "6 dari 7",
@@ -51,22 +51,12 @@ const candidates = [
     id: 5,
     name: "Noris Wahyu Rahmanda",
     location: "Jakarta Pusat, DKI Jakarta",
-    status: "Offering",
+    status: "Diterima",
     appliedDate: "Jul 25, 2024",
     appliedHour: "19:06",
     matchingSkill: "6 dari 7",
-  },
-  {
-    id: 6,
-    name: "Noris Wahyu Rahmanda",
-    location: "Jakarta Pusat, DKI Jakarta",
-    status: "Terpilih",
-    appliedDate: "Jul 25, 2024",
-    appliedHour: "19:06",
-    matchingSkill: "6 dari 7",
-  },
+  }
 ];
-
 
 export function CandidateCard() {
   const [showModal, setShowModal] = useState(false)
@@ -169,7 +159,7 @@ export function CandidateCard() {
 
     return nextStatus
   }
-
+  
   return (
     <div className="space-y-3">
       <div className="flex justify-between gap-3">
@@ -180,7 +170,7 @@ export function CandidateCard() {
           STATUS
         </div>
         <div className="w-[180px] text-[#737373]">
-          <div className="flex justify-start gap-2">
+          <div className="flex justify-start gap-1">
             TANGGAL MELAMAR
             <div className="text-blue-500">
               <ArrowDownOutlined />
@@ -196,7 +186,6 @@ export function CandidateCard() {
         <div className="w-[160px] text-[#737373]">
           <div className="flex gap-2">
             UNDUH
-
           </div>
         </div>
       </div>
@@ -248,7 +237,7 @@ export function CandidateCard() {
               <div className="w-[160px]">
                 <div className="flex flex-col">
                   <div>{candidate.matchingSkill}</div>
-                  <Link onClick={() => setShowModal(true)}>Lihat Semua Skill</Link>
+                  <Link>Lihat Semua Skill</Link>
                 </div>
               </div>
 
@@ -295,7 +284,7 @@ export default function Candidates() {
           </div>
         </div>
       </section>
-      <section className="mt-5">
+      <section className="mt-3">
         <CandidateCard />
       </section>
     </div>

@@ -1,7 +1,8 @@
 import Titles from "@/components/typography/title";
-import { Button, Divider, Tag } from "antd";
+import { Button, Divider, Tag, Card } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface JobPreviewProps {
     editable?: boolean;
@@ -23,7 +24,9 @@ export default function JobPreview({ editable, showApplyButton, hideTitle }: Job
                     </div>
                     <div>
                         {editable && (
-                            <Button onClick={() => router.push('/company/jobs/create')}>Ubah Iklan</Button>
+                            <Link href={`/company/jobs/update?id=${1}`}>
+                                <Button>Ubah Iklan</Button>
+                            </Link>
                         )}
                     </div>
 
@@ -94,6 +97,44 @@ export default function JobPreview({ editable, showApplyButton, hideTitle }: Job
                             <li>Kemampuan komunikasi yang baik, baik lisan maupun tulisan</li>
 
                         </ol>
+                    </div>
+                </div>
+
+                <div className="mt-6">
+                    <Titles level={4} text="Sekilas Tentang Perusahaan" />
+                    <div className="mt-5">
+                        <Card>
+                            <Image src={'/images/ug-mandiri.png'} alt="Logo" height={48} width={120} />
+                            <Titles level={4} text="PT Usaha Gedung Mandiri" />
+                            <div className="mt-6 flex justify-between">
+                                <div className="flex flex-col gap-1 w-2/4">
+                                    <div className="text-neutral-400">BIDANG</div>
+                                    <div className="text-lg">Machinery & Automation</div>
+                                </div>
+
+                                <div className="flex flex-col gap-1 w-2/4">
+                                    <div className="text-neutral-400">JUMLAH KARYAWAN</div>
+                                    <div className="text-lg">51-100</div>
+                                </div>
+
+                            </div>
+                            <div className="mt-10">
+                                <p>
+                                    PT Usaha Gedung Mandiri (dahulu PT Usaha Gedung Bank Dagang Negara) didirikan pada tanggal 29 Oktober 1971 dengan bidang usaha Property khusus nya Office Rental. Pada awalnya merupakan perusahaan Penanaman Modal Asing (PMA) Joint Venture dengan AMCO ASIA yang didirikan pada tahun 1964. Sejak tahun 1971 berubah menjadi perusahaan Penanaman Modal Dalam Negeri karena seluruh sahamnya dimiliki PT Bank Dagang Negara (Persero). PT Usaha Gedung Bank Dagang Negara adalah pelopor dalam bisnis property khususnya office rental. Gedung pertama yang dimiliki dikenal dengan nama Gedung Bank Dagang Negara. Setelah berubah nama menjadi PT Usaha Gedung Mandiri pada tahun 2012, bisnis perusahaan dikembangkan pada bidang Bank jasa penunjang bisnis, dengan menjalankan aktivitas “non core business” PT Bank Mandiri (Persero) Tbk menjadi “core business” PT Usaha Gedung Mandiri.
+                                </p>
+                            </div>
+
+                            <div className="mt-8">
+                                <div className="flex flex-col gap-1 w-2/4">
+
+                                    <div className="text-neutral-500 mb-2">Tunjangan dan Keuntungan</div>
+                                    <div className="flex">
+                                        <Tag>Asuransi Kesehatan</Tag>
+                                        <Tag>Kacamata</Tag>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
                     </div>
                 </div>
             </section>

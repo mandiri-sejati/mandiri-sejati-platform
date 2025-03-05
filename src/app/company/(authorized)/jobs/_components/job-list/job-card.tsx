@@ -2,6 +2,9 @@ import { EyeOutlined, UserOutlined, EllipsisOutlined, DeleteOutlined, EditOutlin
 import { Dropdown, Space, Switch, MenuProps, Modal, Button } from "antd";
 import NextLink from "next/link";
 import { useState } from "react";
+import dayjs from "dayjs";
+import Link from "next/link";
+import Titles from "@/components/typography/title";
 
 const draftJobListings = [
     {
@@ -63,8 +66,8 @@ const jobListings = [
     {
       id: 1,
       title: "Perwakilan Layanan Pelanggan",
-      postEndDate: "Post berakhir pada 2 Feb 2022",
-      postDeactivateDate: "Post deaktivasi pada 3 Feb 2022",
+      postEndDate: "03/12/2025",
+      postDeactivateDate: "Post deaktivasi pada 13 Mar 2025",
       selected: 0,
       interview: 0,
       offering: 0,
@@ -76,8 +79,8 @@ const jobListings = [
     {
       id: 2,
       title: "Software Engineer",
-      postEndDate: "Post berakhir pada 10 Mar 2022",
-      postDeactivateDate: "Post deaktivasi pada 15 Mar 2022",
+      postEndDate: "04/03/2025",
+      postDeactivateDate: "Post deaktivasi pada 4 Apr 2025",
       selected: 2,
       interview: 1,
       offering: 1,
@@ -89,8 +92,8 @@ const jobListings = [
     {
       id: 3,
       title: "Marketing Specialist",
-      postEndDate: "Post berakhir pada 5 Apr 2022",
-      postDeactivateDate: "Post deaktivasi pada 10 Apr 2022",
+      postEndDate: "05/04/2025",
+      postDeactivateDate: "Post deaktivasi pada 5 May 2025",
       selected: 3,
       interview: 2,
       offering: 1,
@@ -102,8 +105,8 @@ const jobListings = [
     {
       id: 4,
       title: "Data Analyst",
-      postEndDate: "Post berakhir pada 20 Mei 2022",
-      postDeactivateDate: "Post deaktivasi pada 25 Mei 2022",
+      postEndDate: "05/20/2025",
+      postDeactivateDate: "Post deaktivasi pada 21 May 2025",
       selected: 5,
       interview: 3,
       offering: 2,
@@ -115,8 +118,8 @@ const jobListings = [
     {
       id: 5,
       title: "Product Manager",
-      postEndDate: "Post berakhir pada 1 Jun 2022",
-      postDeactivateDate: "Post deaktivasi pada 5 Jun 2022",
+      postEndDate: "06/10/2025",
+      postDeactivateDate: "Post deaktivasi pada 11 Jun 2025",
       selected: 7,
       interview: 4,
       offering: 3,
@@ -128,8 +131,8 @@ const jobListings = [
     {
       id: 6,
       title: "HR Specialist",
-      postEndDate: "Post berakhir pada 15 Jul 2022",
-      postDeactivateDate: "Post deaktivasi pada 20 Jul 2022",
+      postEndDate: "07/15/2025",
+      postDeactivateDate: "Post deaktivasi pada 16 Jul 2025",
       selected: 4,
       interview: 3,
       offering: 2,
@@ -138,62 +141,10 @@ const jobListings = [
       applicants: 60,
       isActive: true,
     },
-    {
-      id: 7,
-      title: "UX Designer",
-      postEndDate: "Post berakhir pada 30 Agu 2022",
-      postDeactivateDate: "Post deaktivasi pada 5 Sep 2022",
-      selected: 6,
-      interview: 5,
-      offering: 4,
-      accepted: 4,
-      views: 320,
-      applicants: 180,
-      isActive: false,
-    },
-    {
-      id: 8,
-      title: "DevOps Engineer",
-      postEndDate: "Post berakhir pada 10 Okt 2022",
-      postDeactivateDate: "Post deaktivasi pada 15 Okt 2022",
-      selected: 2,
-      interview: 1,
-      offering: 1,
-      accepted: 1,
-      views: 220,
-      applicants: 130,
-      isActive: true,
-    },
-    {
-      id: 9,
-      title: "QA Engineer",
-      postEndDate: "Post berakhir pada 25 Nov 2022",
-      postDeactivateDate: "Post deaktivasi pada 30 Nov 2022",
-      selected: 1,
-      interview: 1,
-      offering: 1,
-      accepted: 0,
-      views: 90,
-      applicants: 50,
-      isActive: true,
-    },
-    {
-      id: 10,
-      title: "Cybersecurity Specialist",
-      postEndDate: "Post berakhir pada 5 Des 2022",
-      postDeactivateDate: "Post deaktivasi pada 10 Des 2022",
-      selected: 8,
-      interview: 6,
-      offering: 5,
-      accepted: 5,
-      views: 500,
-      applicants: 250,
-      isActive: false,
-    },
   ];
   
 
-export default function JobCard({ type, selectedTabs }: { type: 'published' | 'draft', selectedTabs: string }) {
+export default function JobCard({ type, selectedTabs, search }: { type: 'published' | 'draft', selectedTabs: string, search: string }) {
     let selectedJobs = []
     if (type === 'draft') {
         selectedJobs = draftJobListings
@@ -209,7 +160,12 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
         selectedJobs = selectedTabs === "Semua" ? jobListings : jobListings.filter(job => job.isActive === isActive)
     }
 
+    if (search) {
+      selectedJobs = selectedJobs.filter((el) => el.title.toLowerCase().includes(search))
+    }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalExtendOpen, setIsModalExtendOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -223,6 +179,25 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const showModalExtend = () => {
+    setIsModalExtendOpen(true)
+  }
+
+  const handleOkExtend = () => {
+    setIsModalExtendOpen(false);
+    
+  };
+
+  const handleCancelExtend = () => {
+    setIsModalExtendOpen(false);
+  };
+
+  const checkExpiredDate = (endDate: string) => {
+    const diff = dayjs(endDate).diff(dayjs(), 'd')
+    return <div className={`text-base ${diff <= 7 ? "text-[#FF4D4F]" : "text-[#8C8C8C]"}`}>{`Post berakhir pada ${dayjs(endDate).format('D MMM YYYY')}`}</div>
+  }
+
 
   return (
     <div className="space-y-3">
@@ -240,7 +215,7 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
             },
             {
                 label: (
-                    <NextLink href="#">
+                    <NextLink href={`/company/jobs/update?id=${job.id}`}>
                         <EditOutlined /> Edit Iklan
                     </NextLink>
                 ),
@@ -259,8 +234,8 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
             },
             {
                 label: (
-                    <NextLink href="#">
-                        <DeleteOutlined /> Hapus Iklan
+                    <NextLink href="#" onClick={showModalExtend}>
+                        <DeleteOutlined /> Perpanjang masa aktif
                     </NextLink>
                 ),
                 key: '3',
@@ -286,9 +261,13 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
                   </Dropdown>
                 </div>
                 <div>
-                  <div className="text-lg font-semibold">{job.title}</div>
-                  <div className="text-base text-[#8C8C8C]">{job.postEndDate}</div>
-                  <div className="text-base text-[#8C8C8C]">{job.postDeactivateDate}</div>
+                  <div className="font-semibold hover:cursor-pointer">
+                    <Link href={`/company/jobs/detail?id=${job.id}`}>
+                      <Titles level={4} text={job.title} />
+                    </Link>
+                  </div>
+                  { type === 'published' ? checkExpiredDate(job.postEndDate) : <div className="text-base text-[#8C8C8C]">{job.postEndDate}</div>}
+                  { type === 'published' && <div className="text-base text-[#8C8C8C]">{job.postDeactivateDate}</div> }
                 </div>
               </div>
 
@@ -320,23 +299,43 @@ export default function JobCard({ type, selectedTabs }: { type: 'published' | 'd
             </div>
           </div>
 
-          <Modal 
-            centered 
-            title="Nonaktifkan Iklan ?" 
-            open={isModalOpen} 
-            // onOk={handleOk} 
-            onCancel={handleCancel}
-            footer={[
-              <Button key="back" onClick={handleCancel}>
-                Batal
-              </Button>,
-              <Button key="submit" type="primary" onClick={() => handleOk()}>
-                Nonaktifkan
-              </Button>
-            ]}
-          >
-            <p>Pencari kerja tidak dapat melamar pekerjaan ini lagi. Apakah Anda yakin ingin menonaktifkan ?</p>
-          </Modal>
+            <Modal 
+              centered 
+              title="Nonaktifkan Iklan ?" 
+              open={isModalOpen} 
+              // onOk={handleOk} 
+              onCancel={handleCancel}
+              mask={true}
+              footer={[
+                <Button key="back" onClick={handleCancel}>
+                  Batal
+                </Button>,
+                <Button key="submit" type="primary" onClick={() => handleOk()}>
+                  Nonaktifkan
+                </Button>
+              ]}
+            >
+              <p>Pencari kerja tidak dapat melamar pekerjaan ini lagi. Apakah Anda yakin ingin menonaktifkan ?</p>
+            </Modal>
+
+            <Modal 
+              centered 
+              title="Perpanjang masa aktif iklan ?" 
+              open={isModalExtendOpen} 
+              // onOk={handleOk} 
+              onCancel={handleCancelExtend}
+              mask={true}
+              footer={[
+                <Button key="back" onClick={handleCancelExtend}>
+                  Batal
+                </Button>,
+                <Button key="submit" type="primary" onClick={() => handleOkExtend()}>
+                  Perpanjang
+                </Button>
+              ]}
+            >
+              <p>Iklan anda akan di perpanjang selama 30 hari kedepan</p>
+            </Modal>
           </>
         );
       })}

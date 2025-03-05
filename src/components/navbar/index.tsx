@@ -22,11 +22,14 @@ export default function Navbar() {
     const pathname = usePathname();
     let dashboardClassname = ''
     let jobsClassname = ''
+    let candidateClassname = ''
     const tabSelectedClassname = 'bg-blue-50 text-blue-500'
     if(pathname.includes('dashboard')) {
         dashboardClassname = tabSelectedClassname
-    }else{
+    }else if (pathname.includes('jobs')) {
         jobsClassname = tabSelectedClassname
+    }else {
+        candidateClassname = tabSelectedClassname
     }
 
     return (
@@ -38,6 +41,7 @@ export default function Navbar() {
                 <div className="flex-1 text-center">
                     <NextLink className={`mr-3  rounded-md p-2 ${dashboardClassname}`} href="/company/dashboard"> Beranda </NextLink>
                     <NextLink className={`mr-3  rounded-md p-2 ${jobsClassname}`} href="/company/jobs"> Iklan Pekerjaan </NextLink>
+                    <NextLink className={`mr-3  rounded-md p-2 ${candidateClassname}`} href="/company/candidate"> List Kandidat </NextLink>
                 </div>
                 <div>
                     <span className="text-blue-500 mr-3 md:inline-block hidden">

@@ -5,8 +5,12 @@ import { Input, InputRef, Tag } from "antd";
 import Link from "antd/es/typography/Link";
 import { useEffect, useRef, useState } from "react";
 
-const Skill: React.FC = () => {
-    const [tags, setTags] = useState<string[]>([]);
+interface SkillProps {
+    defaultValue?: string[];
+}
+
+const Skill: React.FC<SkillProps> = ({ defaultValue = [] }) => {
+    const [tags, setTags] = useState<string[]>(defaultValue);
     const [inputVisible, setInputVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<InputRef>(null);

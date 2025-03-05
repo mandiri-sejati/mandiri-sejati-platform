@@ -9,12 +9,13 @@ import { useState } from "react";
 
 export default function JobList({ type }: { type: 'published' | 'draft' }) {
     const [selectedTabs, setSelectedTabs] = useState("Semua")
+    const [search, setSearch] = useState("")
     return (
         <div>
             <section>
                 <div className="flex justify-between">
                     <div className="flex gap-1">
-                        <Input placeholder="Cari Iklan" prefix={<SearchOutlined />} />
+                        <Input placeholder="Cari Iklan" prefix={<SearchOutlined />} onChange={(e) => setSearch(e.target.value)} />
                         {type === 'published' && (
                             <>
                                 <Button className="!h-full" color="primary" variant="outlined" onClick={() => setSelectedTabs("Semua")}>Semua</Button>
@@ -35,7 +36,7 @@ export default function JobList({ type }: { type: 'published' | 'draft' }) {
                 </div>
             </section>
             <section className="mt-5">
-                <JobCard type={type} selectedTabs={selectedTabs}/>
+                <JobCard type={type} selectedTabs={selectedTabs} search={search}/>
             </section>
         </div>
     )
