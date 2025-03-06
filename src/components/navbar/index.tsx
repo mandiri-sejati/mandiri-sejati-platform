@@ -45,7 +45,7 @@ export default function Navbar() {
                     <NextLink className={`mr-3  rounded-md p-2 ${dashboardClassname}`} href="/company/dashboard"> Beranda </NextLink>
                     <NextLink className={`mr-3  rounded-md p-2 ${jobsClassname}`} href="/company/jobs"> Iklan Pekerjaan </NextLink>
                     <NextLink className={`mr-3  rounded-md p-2 ${candidateClassname}`} href="/company/candidate"> List Kandidat </NextLink>
-                    <NextLink className={`mr-3  rounded-md p-2 ${candidateClassname}`} href="/email.html"> Email Template </NextLink>
+                    <NextLink className={`mr-3  rounded-md p-2 ${emailClassname}`} href="/email.html"> Email Template </NextLink>
                 </div>
                 <div>
                     <span className="text-blue-500 mr-3 md:inline-block hidden">
