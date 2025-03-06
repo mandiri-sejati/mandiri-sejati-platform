@@ -159,7 +159,6 @@ export default function JobCard({ type, selectedTabs, search }: { type: 'publish
         }
         selectedJobs = selectedTabs === "Semua" ? jobListings : jobListings.filter(job => job.isActive === isActive)
     }
-    console.log("di klik", selectedJobs)
 
     if (search) {
       selectedJobs = selectedJobs.filter((el) => el.title.toLowerCase().includes(search))
