@@ -23,13 +23,16 @@ export default function Navbar() {
     let dashboardClassname = ''
     let jobsClassname = ''
     let candidateClassname = ''
+    let emailClassname = ''
     const tabSelectedClassname = 'bg-blue-50 text-blue-500'
     if(pathname.includes('dashboard')) {
         dashboardClassname = tabSelectedClassname
     }else if (pathname.includes('jobs')) {
         jobsClassname = tabSelectedClassname
-    }else {
+    }else if (pathname.includes('candidate')) {
         candidateClassname = tabSelectedClassname
+    }else {
+        emailClassname = tabSelectedClassname
     }
 
     return (
@@ -42,6 +45,7 @@ export default function Navbar() {
                     <NextLink className={`mr-3  rounded-md p-2 ${dashboardClassname}`} href="/company/dashboard"> Beranda </NextLink>
                     <NextLink className={`mr-3  rounded-md p-2 ${jobsClassname}`} href="/company/jobs"> Iklan Pekerjaan </NextLink>
                     <NextLink className={`mr-3  rounded-md p-2 ${candidateClassname}`} href="/company/candidate"> List Kandidat </NextLink>
+                    <NextLink className={`mr-3  rounded-md p-2 ${candidateClassname}`} href="/email.html"> Email Template </NextLink>
                 </div>
                 <div>
                     <span className="text-blue-500 mr-3 md:inline-block hidden">
