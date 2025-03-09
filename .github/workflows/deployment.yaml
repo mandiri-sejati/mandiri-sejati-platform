@@ -1,0 +1,68 @@
+name: Deploy to Development Environment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  APP_NAME: mandiri-sejati-platform
+  HOST: 116.193.190.80
+  PORT: 3069
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: https://${{ env.HOST }}:${{ env.PORT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set shortened commit ID
+        run: echo "APP_TAG=$(echo $GITHUB_SHA | cut -c1-8)" >> $GITHUB_ENV
+
+      - name: Log in to GHCR
+        run: docker login ghcr.io -u ${{ secrets.GH_USER }} --password "${{ secrets.GH_TOKEN }}"
+
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }} .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}
+
+      - name: Deploy to Remote VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASSWORD }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.GH_USER }} --password "${{ secrets.GH_TOKEN }}"
+            docker pull ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}
+            docker stop ${{ env.APP_NAME }} || true
+            docker rm ${{ env.APP_NAME }} || true
+            docker run -d --restart=always --name ${{ env.APP_NAME }} -p ${{ env.HOST }}:${{ env.PORT }}:3000 "ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}"
+
+      - name: Clean up images
+        run: |
+          docker images --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \
+            | grep "mandiri-sejati/${{ env.APP_NAME }}" \
+            | sort -rk2 \
+            | awk 'NR>3 {print $1}' \
+            | xargs -I {} docker rmi -f {}
+
+      - name: Clean up untagged GHCR images
+        uses: quartx-analytics/ghcr-cleaner@v1
+        with:
+          owner-type: org
+          token: ${{ secrets.GH_TOKEN }}
+          repository_owner: ${{ github.repository_owner }}
+          package-name: ${{ env.APP_NAME }}
+          delete-untagged: true
+          delete-tags: true
+          keep-latest: 3
