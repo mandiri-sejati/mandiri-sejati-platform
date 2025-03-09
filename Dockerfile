@@ -17,13 +17,14 @@ WORKDIR /app
 ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-USER nextjs
 RUN npm install -g next
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/package.json /app/package.json
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/static ./.next/static
+
+USER nextjs
 
 ENV PORT=3000
 EXPOSE 3000
