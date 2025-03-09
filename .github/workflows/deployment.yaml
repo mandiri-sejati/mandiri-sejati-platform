@@ -46,7 +46,7 @@ jobs:
             docker pull ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}
             docker stop ${{ env.APP_NAME }} || true
             docker rm ${{ env.APP_NAME }} || true
-            docker run -d --restart=always --name ${{ env.APP_NAME }} -p ${{ env.HOST }}:${{ env.PORT }}:3000 "ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}"
+            docker run -d --restart=always --name ${{ env.APP_NAME }} -p ${{ env.PORT }}:3000 "ghcr.io/mandiri-sejati/${{ env.APP_NAME }}:${{ env.APP_TAG }}"
 
       - name: Clean up images
         run: |
